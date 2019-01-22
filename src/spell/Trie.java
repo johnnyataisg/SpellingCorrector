@@ -316,29 +316,35 @@ public class Trie implements ITrie
         }
     }
 
-    public int hashCode(Node node)
+    public int hashCode()
     {
-        if (node == null)
+        int[] hashValue = {1};
+        Node startNode = this.root;
+        this.hashCode(hashValue, startNode);
+        hashValue[0] = hashValue[0] * 31;
+        return hashValue[0];
+    }
+
+    public void hashCode(int[] value, Node currentNode)
+    {
+        if (currentNode != this.root)
         {
-            return 0;
+            value[0] += (currentNode.getChar() * currentNode.getValue());
+            if (currentNode.isLastChar == true)
+            {
+                for (int i = 0; i < currentNode.representedWord.length(); i++)
+                {
+                    value[0] += currentNode.representedWord.charAt(i);
+                }
+            }
         }
-        int boolValue;
-        if (node.isLastChar == true)
+        for (int i = 0; i < alphabet_length; i++)
         {
-            boolValue = 1;
+            if (currentNode.nextLetters[i] != null)
+            {
+                hashCode(value, currentNode.nextLetters[i]);
+            }
         }
-        else
-        {
-            boolValue = 0;
-        }
-        String word = node.representedWord;
-        int hash = 0;
-        for (int i = 0; i < word.length(); i++)
-        {
-            hash += word.charAt(i) * 31;
-        }
-        hash += (boolValue * 33);
-        return hash;
     }
 
     public boolean equals(Trie trie)
