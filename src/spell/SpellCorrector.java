@@ -20,12 +20,14 @@ public class SpellCorrector implements ISpellCorrector
        Scanner scanner = new Scanner(new File(dictionaryFileName));
        while (scanner.hasNext())
        {
-           this.trie.add(scanner.next());
+           String nextWord = scanner.next().toLowerCase();
+           this.trie.add(nextWord);
        }
     }
 
     public String suggestSimilarWord(String inputWord)
     {
+        inputWord = inputWord.toLowerCase();
         if (this.trie.find(inputWord) != null)
         {
             return this.trie.find(inputWord).getString();
