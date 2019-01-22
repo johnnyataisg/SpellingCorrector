@@ -22,8 +22,6 @@ public class Main {
 			suggestion = "No similar word found";
 		}
 		System.out.println("Suggestion is: " + suggestion);
-		Trie trie = spellCorrector.getTrie();
-		System.out.println(trie.hashCode(trie.find(args[1])));
 	}
 
 }
