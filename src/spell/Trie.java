@@ -347,19 +347,27 @@ public class Trie implements ITrie
         }
     }
 
-    public boolean equals(Trie trie)
+    public boolean equals(Object obj)
     {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this.getClass() != obj.getClass())
+        {
+            return false;
+        }
+        Trie newTrie = (Trie)obj;
         Node trie_1_node = this.root;
-        Node trie_2_node = trie.root;
+        Node trie_2_node = newTrie.root;
         return equals(trie_1_node, trie_2_node);
     }
 
     public boolean equals(Node first, Node second)
     {
-        boolean isEqual = true;
-        if (first.letter != second.letter || first.frequency != second.frequency || first.isLastChar != second.isLastChar)
+        if (first.frequency != second.frequency)
         {
-            isEqual = false;
+            return false;
         }
         else
         {
@@ -367,25 +375,22 @@ public class Trie implements ITrie
             {
                 if (first.nextLetters[i] == null && second.nextLetters[i] != null)
                 {
-                    isEqual = false;
-                    break;
+                    return false;
                 }
                 else if (first.nextLetters[i] != null && second.nextLetters[i] == null)
                 {
-                    isEqual = false;
-                    break;
+                    return false;
                 }
                 else if (first.nextLetters[i] != null && second.nextLetters[i] != null)
                 {
                     if (equals(first.nextLetters[i], second.nextLetters[i]) == false)
                     {
-                        isEqual = false;
-                        break;
+                        return false;
                     }
                 }
             }
         }
-        return isEqual;
+        return true;
     }
 
     public int getCount(String word)
